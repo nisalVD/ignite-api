@@ -13,4 +13,14 @@ router.post('/auth/register',
   }
 )
 
+// Sign in
+router.post('/auth',
+  authMiddleWare.signIn,
+  (req ,res) => {
+    res.json({
+      user: req.user
+    })
+  }
+)
+
 module.exports = router
