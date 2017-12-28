@@ -21,6 +21,7 @@ function register(req, res, next) {
 }
 
 module.exports = {
+  initialize: passport.initialize(),
   register,
   signIn: passport.authenticate('local', { session: false })
 }

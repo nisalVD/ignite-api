@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors')
+const authMiddleware = require('./middleware/auth')
 
 const server = express();
 
-// Middleware Plugins
+// ##### Middleware Plugins
 // parse application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({ extended: false }))
+// initialize passport
+server.use(authMiddleware.initialize)
 // parse application/json
 server.use(bodyParser.json())
 server.use(cors())
