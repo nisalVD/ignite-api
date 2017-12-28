@@ -18,7 +18,7 @@ server.use([
   require('./routes/auth')
 ])
 
-server.get("/", (req,res) => {
+server.get("/", authMiddleware.requireJWT, (req,res) => {
   res.json({ status: "API is running" })
 })
 

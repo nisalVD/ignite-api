@@ -1,9 +1,12 @@
+GET http://localhost:7000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYy5jb20iLCJpYXQiOjE1MTQ0OTE4OTcsImV4cCI6MTUxNTA5NjY5Nywic3ViIjoiNWE0NTRmZjk3ZWMxNTlhMzcxZjIwYmMxIn0.ukBtMBtsdIyrjXyAyKbd8rBHKLBC--P6n3Ufod3BfCc
+
 ### Register
 POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
-  "email": "a@b.com",
+  "email": "a@c.com",
   "firstName": "Nisal",
   "lastName": "Don",
   "password": "123456"

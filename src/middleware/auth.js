@@ -1,5 +1,6 @@
 const passport = require('passport')
 const JWT = require('jsonwebtoken')
+const passportJwt = require('passport-jwt')
 const User = require('../models/User')
 
 const jwtSecret = 'placeholder-jwt-secret'
@@ -23,6 +24,33 @@ function register(req, res, next) {
     next()
   })
 }
+
+passport.use(new passportJwt.Strategy(
+  {
+    jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: jwtSecret,
+    algorithms: [jwtAlgorithm]
+  }, 
+  // When we have a verified token
+  (payload, done) => {
+    // Find user by using id from database
+    User.findById(payload.sub)
+      .then(user => {
+        // If user was found with this id
+        if (user) {
+          done(null, user)
+        }
+        // If user was not found
+        else {
+          done(null, false)
+        }
+      })
+      .catch(error => {
+        // if there was a failure
+        done(error, false)
+      })
+  }
+))
 
 function signJWTForUser(req, res) {
   // Get the user (either just signed in or signed up)
@@ -49,5 +77,6 @@ module.exports = {
   initialize: passport.initialize(),
   register,
   signIn: passport.authenticate('local', { session: false }),
+  requireJWT: passport.authenticate('jwt', {session: false}),
   signJWTForUser
 }
