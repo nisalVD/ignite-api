@@ -6,7 +6,7 @@ const server = express();
 
 // Middleware Plugins
 server.use(bodyParser())
-
+server.use(cors())
 
 
 server.listen(7000, ()=>{
