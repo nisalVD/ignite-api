@@ -6,21 +6,13 @@ const router = new express.Router()
 // Register
 router.post('/auth/register', 
   authMiddleWare.register,
-  (req ,res) => {
-    res.json({
-      user: req.user
-    })
-  }
+  authMiddleWare.signJWTForUser
 )
 
 // Sign in
 router.post('/auth',
   authMiddleWare.signIn,
-  (req ,res) => {
-    res.json({
-      user: req.user
-    })
-  }
+  authMiddleWare.signJWTForUser
 )
 
 module.exports = router
