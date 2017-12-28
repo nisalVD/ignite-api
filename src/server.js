@@ -5,7 +5,7 @@ const authMiddleware = require('./middleware/auth')
 
 const server = express();
 
-// ##### Middleware Plugins
+/* Middleware Plugins */
 // parse application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({ extended: false }))
 // initialize passport
