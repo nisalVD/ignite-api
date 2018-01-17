@@ -35,7 +35,7 @@ router.get('/modules', (req, res) => {
 // })
 
 // Find all the questions for the module
-router.get('/module/:id', (req,res) => {
+router.get('/module/:id/questions', (req,res) => {
   const moduleId = req.params.id
   Question.find({ module: moduleId })
   .then(question => {
