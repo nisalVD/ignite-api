@@ -15,7 +15,8 @@ server.use(bodyParser.json())
 server.use(cors())
 
 server.use([
-  require('./routes/auth')
+  require('./routes/auth'),
+  require('./routes/modules')
 ])
 
 server.get("/", authMiddleware.requireJWT, (req,res) => {

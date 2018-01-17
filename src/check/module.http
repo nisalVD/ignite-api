@@ -1,7 +1,40 @@
+### Make a module
 POST http://localhost:7000/module
 Content-Type: application/json
 
 {
-  "name":"Module 2"
+  "name":"Module 1"
 }
+#### Make a question with module 
+
+POST http://localhost:7000/question
+Content-Type: application/json
+
+{
+  "content":"1. What the fuck are you?",
+  "module": "5a5f3d818f1ef94ef50c7ca5"
+}
+
+### make answers for questions
+POST http://localhost:7000/answer
+Content-Type: application/json
+
+{
+  "content":"1. What the fuck are you?",
+  "correct": false,
+  "question": "5a5f3d8e8f1ef94ef50c7ca6"
+}
+
+
+### Give a marking for the question if its correct
+POST http://localhost:7000/marking
+Content-Type: application/json
+
+{
+  "user": "5a5f3db48f1ef94ef50c7ca8",
+  "question": "5a5f3d8e8f1ef94ef50c7ca6",
+  "correct": true
+}
+
+
 

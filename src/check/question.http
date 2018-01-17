@@ -1,7 +1,0 @@
-POST http://localhost:7000/question
-Content-Type: application/json
-
-{
-  "content":"1. What the fuck are you?",
-  "module": "5a5f2fa16c8a1b3d2a901e88"
-}
