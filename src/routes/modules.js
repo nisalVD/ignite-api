@@ -1,7 +1,6 @@
 const express = require('express')
 const Module = require('../models/Module')
 const Question = require('../models/Question')
-const Answer = require('../models/Answer')
 const Marking = require('../models/Marking')
 
 const router = new express.Router()
@@ -55,11 +54,7 @@ router.get('/questions', (req, res) => {
   .then(question => res.status(202).json(question))
   .catch(err => res.status(404).send(err))
 })
-router.post('/answer', (req,res) => {
-  Answer.create(req.body)
-    .then(answer => res.status(201).json(answer.question))
-    .catch(err => res.send(err))
-})
+
 router.post('/Marking', (req,res) => {
   Marking.create(req.body)
     .then(marking => res.status(201).json(marking))

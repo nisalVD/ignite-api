@@ -8,6 +8,9 @@ const QuestionSchema = new Schema({
     ref: 'Module',
     required: true
   },
+  answers: [{
+    content: String,
+  }]
 })
 
 module.exports = mongoose.model('Question', QuestionSchema)

@@ -16,14 +16,12 @@
 * State: String,
 * PostCode: String
 
-#### Answer
-* questionID: References
-* content: String
-
 #### Question
 * moduleId: References
 * content: String
-* answeridu: References
+* answers: [{
+  content:String
+}]
 
 #### Module
 * name: String
@@ -37,3 +35,4 @@ correct: boolean
 ### CheckList
 * x View all modules
 * x View all questions for certain module
+* Find all the answers for the question
