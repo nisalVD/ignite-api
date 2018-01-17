@@ -7,7 +7,7 @@ const QuestionSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Module',
     required: true
-  }
+  },
 })
 
 module.exports = mongoose.model('Question', QuestionSchema)
