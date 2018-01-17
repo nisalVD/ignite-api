@@ -12,6 +12,11 @@ const MarkingSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Question',
     required: true
+  }, 
+  answer: {
+    type: Schema.ObjectId,
+    ref: 'Question.answer',
+    required: true
   }
 })
 

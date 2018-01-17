@@ -17,7 +17,7 @@
 * PostCode: String
 
 #### Question
-* moduleId: References
+* Module: References
 * content: String
 * answers: [{
   content:String
@@ -27,19 +27,22 @@
 * name: String
 
 #### Marking
-userId: References
-moduleId: References
-questionId: References
+User: References
+Module: References
+Quest.answer: References
 correct: boolean
 
 ### Answer
-question: references
-question.answer: references
+Question: references
+Question.answer: references
+
 
 ### CheckList
 * x View all modules
 * x View all questions for certain module
 * x Find all the answers for the question
 * x Make Answer table
+* List marking associated with user
+
 * Add marking functionality that checks if the question is right
 * Refactor the routes alot
