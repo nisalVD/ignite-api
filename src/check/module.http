@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
   "content":"1. What the fuck are you?",
-  "module": "5a5f5012fcbda65b3bf59109",
+  "module": "5a5f61464f1e05651eab4404",
   "answers": [
     {"content": "A Racoon"},
     {"content": "A Horse"},
@@ -20,7 +20,39 @@ Content-Type: application/json
     {"content": "A Dog"}
   ]
 }
+### Second question
 
+POST http://localhost:7000/question
+Content-Type: application/json
+
+{
+  "content":"1. Are you Jon Snow?",
+  "module": "5a5f61464f1e05651eab4404",
+  "answers": [
+    {"content": "Yes"},
+    {"content": "No"},
+    {"content": "Definately"},
+    {"content": "HORDOR"}
+  ]
+}
+### Post right answer
+
+POST http://localhost:7000/Answer
+Content-Type: application/json
+
+{
+  "question": "5a5f61464f1e05651eab4404",
+  "answer": "5a5f61504f1e05651eab44"
+}
+### Answer
+
+POST http://localhost:7000/Answer
+Content-Type: application/json
+
+{
+  "question": "5a5f625a81e2b665e6c832a7",
+  "answer": "5a5f625a81e2b665e6c832a8"
+}
 ### make answers for questions
 ### Give a marking for the question if its correct
 POST http://localhost:7000/marking
@@ -31,6 +63,8 @@ Content-Type: application/json
   "question": "5a5f3d8e8f1ef94ef50c7ca6",
   "correct": true
 }
+
+### Answer to second question
 
 
 

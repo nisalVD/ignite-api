@@ -2,6 +2,7 @@ const express = require('express')
 const Module = require('../models/Module')
 const Question = require('../models/Question')
 const Marking = require('../models/Marking')
+const Answer = require('../models/Answer')
 
 const router = new express.Router()
 
@@ -59,6 +60,18 @@ router.post('/Marking', (req,res) => {
   Marking.create(req.body)
     .then(marking => res.status(201).json(marking))
     .catch(err => res.send(err))
+})
+
+router.post('/Answer', (req,res) => {
+  Answer.create(req.body)
+    .then(answer => res.status(201).json(answer))
+    .catch(err => res.send(err))
+})
+// List all the answers
+router.get('/answers', (req, res) => {
+  Answer.find()
+  .then(answer => res.status(202).json(answer))
+  .catch(err => res.status(404).send(err))
 })
 
 module.exports = router
