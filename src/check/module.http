@@ -1,0 +1,7 @@
+POST http://localhost:7000/module
+Content-Type: application/json
+
+{
+  "name":"Module 2"
+}
+

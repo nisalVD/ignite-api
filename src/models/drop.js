@@ -1,7 +1,12 @@
 const User = require('./User')
+const Module = require('./Module')
 
 User.deleteMany() 
   .then(() => {
     console.log('Deleted Users')
-    process.exit()
+  })
+
+Module.deleteMany()
+  .then(() => {
+    console.log('Deleted Modules')
   })
