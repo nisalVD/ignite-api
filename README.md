@@ -4,6 +4,7 @@
 * Question
 * Module
 * Marking
+* Answer
 
 #### User
 * firstName: String,
@@ -15,15 +16,20 @@
 * State: String,
 * PostCode: String
 
+#### Answer
+* questionID: References
+* content: String
+
 #### Question
 * moduleId: References
 * content: String
+* answerid: References
 
 #### Module
 * name: String
 
 #### Marking
-userID: References
+userId: References
 moduleId: References
 questionId: References
 correct: boolean
