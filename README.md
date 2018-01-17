@@ -23,7 +23,7 @@
 #### Question
 * moduleId: References
 * content: String
-* answerid: References
+* answeridu: References
 
 #### Module
 * name: String

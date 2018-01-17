@@ -13,7 +13,11 @@ function register(req, res, next) {
   const user = new User({
     email: req.body.email,
     firstName: req.body.firstName,
-    lastName: req.body.lastName
+    lastName: req.body.lastName,
+    dateOfBirth: req.body.dateOfBirth,
+    address: req.body.address,
+    postCode: req.body.postCode,
+    state: req.body.state
   })
   User.register(user, req.body.password, (error, user) => {
     if (error) {

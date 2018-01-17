@@ -1,9 +1,32 @@
+/*@flow*/
 const mongoose = require('./init')
 const passportLocalMongoose = require('passport-local-mongoose')
 
 const userSchema = new mongoose.Schema({ 
-  firstName: String,
-  lastName: String
+  firstName: {
+    type: String,
+    required: 'First Name cannot be blank'
+    },
+  lastName: {
+    type: String,
+    required: 'Last Name cannot be blank'
+    },
+  dateOfBirth: {
+    type: Date,
+    required: 'Last Name cannot be blank'
+  },
+  address: {
+    type: String,
+    required: "Address is required"
+   },
+  postCode: {
+    type: String,
+    required: "Post Code is required"
+   },
+  state: {
+    type: String,
+    required: "State cannot be blank"
+   }
 })
 
 userSchema.plugin(passportLocalMongoose, {

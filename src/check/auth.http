@@ -6,10 +6,14 @@ POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
-  "email": "a@c.com",
+  "email": "a@l.com",
   "firstName": "Nisal",
   "lastName": "Don",
-  "password": "123456"
+  "password": "123456",
+  "dateOfBirth": "1995/02/01",
+  "address": "10 blagh Street",
+  "postCode": "3802",
+  "state": "VIC"
 }
 
 ### Sign In
@@ -17,6 +21,6 @@ POST http://localhost:7000/auth
 Content-Type: application/json
 
 {
-  "email": "a@b.com",
+  "email": "a@d.com",
   "password": "123456"
 }

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
 mongoose.connect(
-  'mongodb://localhost/express-passport-jwt',
+  'mongodb://localhost/ignite-api',
   { useMongoClient: true }
 )
   .then(() => {
