@@ -1,7 +1,6 @@
 const User = require('./User')
 const Module = require('./Module')
 const Question = require('./Question')
-const Answer = require('./Answer')
 const Marking = require('./Marking')
 
 User.deleteMany() 
@@ -17,11 +16,6 @@ Module.deleteMany()
 Question.deleteMany()
   .then(() => {
     console.log('Deleted Question')
-  })
-
-Answer.deleteMany()
-  .then(() => {
-    console.log('Deleted Answer')
   })
 
 Marking.deleteMany()
