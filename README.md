@@ -41,3 +41,5 @@ question.answer: references
 * x View all questions for certain module
 * x Find all the answers for the question
 * x Make Answer table
+* Add marking functionality that checks if the question is right
+* Refactor the routes alot
