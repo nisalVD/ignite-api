@@ -22,16 +22,6 @@ Content-Type: application/json
 }
 
 ### make answers for questions
-POST http://localhost:7000/answer
-Content-Type: application/json
-
-{
-  "content":"1. What the fuck are you?",
-  "correct": false,
-  "question": "5a5f3d8e8f1ef94ef50c7ca6"
-}
-
-
 ### Give a marking for the question if its correct
 POST http://localhost:7000/marking
 Content-Type: application/json
