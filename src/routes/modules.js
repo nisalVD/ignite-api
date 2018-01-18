@@ -67,13 +67,6 @@ router.get('/user/:id/markings', (req,res) => {
     })
 })
       
-  //   })
-
-  // Creating Marking
-  // Marking.create(req.body)
-  //  .then(newModule => res.status(201).json(newModule))
-  //   .catch(err => res.send(err))
-
 router.get('/markings', (req,res) => {
   Marking.find()
     .then(marking => res.json(marking))
