@@ -51,5 +51,4 @@ Question.answer: references
 * Add verfication for question / answer in Answer model (enum)
 
 ### Remember
-
 * you can get module by question.module

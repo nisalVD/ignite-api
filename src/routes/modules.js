@@ -6,13 +6,17 @@ const Answer = require('../models/Answer')
 
 const router = new express.Router()
 
-
-
 // list all modules
 router.get('/modules', (req, res) => {
   Module.find()
   .then(module => res.status(202).json(module))
   .catch(err => res.status(404).send(err))
+})
+
+router.post('/module', (req,res) => {
+  Module.create(req.body)
+    .then(newModule => res.status(201).json(newModule))
+    .catch(err => res.send(err))
 })
 
 // Find all the questions for the module
@@ -24,19 +28,55 @@ router.get('/module/:id/questions', (req,res) => {
   })
 })
 
-router.get('/user/:id/markings', (req,res) => {
-  const userId = req.params.id
-})
-
-
-
+// router.get('/user/:id/markings', (req,res) => {
+//   const userId = req.params.id
+//   const question = res.body.question
+//   const answer = res.body.answer
+// })
 
 // extra routes
 // Make new module
-router.post('/module', (req,res) => {
-  Module.create(req.body)
-    .then(newModule => res.status(201).json(newModule))
-    .catch(err => res.send(err))
+
+router.post('/marking', (req,res) => {
+  const { question } = req.body
+  const answer = req.body.answer
+  let correct = false; 
+  // console.log('user', user)
+  // console.log('question', question)
+  // console.log('answer', answer)
+  Answer.findOne({ question})
+    .then(question => {
+      const correctAnswer = question.answer
+      if(answer==correctAnswer) {
+        correct = true
+      }
+    })
+    .then(() => {
+      req.body.correct = correct
+      return Marking.create(req.body)
+    })
+    .then(marking => res.status(202).json(marking))
+    .catch(err => res.status(404).json({error: err.message}))
+})
+
+router.get('/user/:id/markings', (req,res) => {
+  const {id} = req.params
+  Marking.find({user: id})
+    .then(marking => {
+      res.status(401).json(marking)
+    })
+})
+      
+  //   })
+
+  // Creating Marking
+  // Marking.create(req.body)
+  //  .then(newModule => res.status(201).json(newModule))
+  //   .catch(err => res.send(err))
+
+router.get('/markings', (req,res) => {
+  Marking.find()
+    .then(marking => res.json(marking))
 })
 
 router.post('/question', (req,res) => {
@@ -58,7 +98,7 @@ router.get('/question/:id/answers', (req, res) => {
   Question.findById(questionId)
   .then(question => {
     const answers = question.answers
-    answersArr = answers.map(answer => answer._id)
+    const answersArr = answers.map(answer => answer._id)
     res.status(201).json({answersArr})
   })
   .catch(err => res.status(404).send.err(err))
@@ -66,11 +106,11 @@ router.get('/question/:id/answers', (req, res) => {
 
 
 
-router.post('/marking', (req,res) => {
-  Marking.create(req.body)
-    .then(marking => res.status(201).json(marking))
-    .catch(err => res.send(err))
-})
+// router.post('/marking', (req,res) => {
+//   Marking.create(req.body)
+//     .then(marking => res.status(201).json(marking))
+//     .catch(err => res.send(err))
+// })
 
 router.post('/answer', (req,res) => {
   Answer.create(req.body)
