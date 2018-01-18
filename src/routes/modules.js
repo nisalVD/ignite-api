@@ -6,11 +6,7 @@ const Answer = require('../models/Answer')
 
 const router = new express.Router()
 
-router.post('/module', (req,res) => {
-  Module.create(req.body)
-    .then(newModule => res.status(201).json(newModule))
-    .catch(err => res.send(err))
-})
+
 
 // list all modules
 router.get('/modules', (req, res) => {
@@ -19,21 +15,6 @@ router.get('/modules', (req, res) => {
   .catch(err => res.status(404).send(err))
 })
 
-// find my module id
-// router.get('/module/:id', (req, res) => {
-//   const id = req.params.id
-//   Module.findById(id)
-//   .then(foundModule => {
-//     if(foundModule) {
-//       res.status(202).json(foundModule)
-//     }
-//     else {
-//       res.status(404).json({error: `Module with ${id} not found`})
-//     }
-//   })
-//   .catch(err => res.status(404).send(err.message))
-// })
-
 // Find all the questions for the module
 router.get('/module/:id/questions', (req,res) => {
   const moduleId = req.params.id
@@ -41,6 +22,21 @@ router.get('/module/:id/questions', (req,res) => {
   .then(question => {
     res.json(question)
   })
+})
+
+router.get('/user/:id/markings', (req,res) => {
+  const userId = req.params.id
+})
+
+
+
+
+// extra routes
+// Make new module
+router.post('/module', (req,res) => {
+  Module.create(req.body)
+    .then(newModule => res.status(201).json(newModule))
+    .catch(err => res.send(err))
 })
 
 router.post('/question', (req,res) => {
@@ -56,13 +52,27 @@ router.get('/questions', (req, res) => {
   .catch(err => res.status(404).send(err))
 })
 
-router.post('/Marking', (req,res) => {
+// List all answers for an question
+router.get('/question/:id/answers', (req, res) => {
+  const questionId = req.params.id
+  Question.findById(questionId)
+  .then(question => {
+    const answers = question.answers
+    answersArr = answers.map(answer => answer._id)
+    res.status(201).json({answersArr})
+  })
+  .catch(err => res.status(404).send.err(err))
+})
+
+
+
+router.post('/marking', (req,res) => {
   Marking.create(req.body)
     .then(marking => res.status(201).json(marking))
     .catch(err => res.send(err))
 })
 
-router.post('/Answer', (req,res) => {
+router.post('/answer', (req,res) => {
   Answer.create(req.body)
     .then(answer => res.status(201).json(answer))
     .catch(err => res.send(err))

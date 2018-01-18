@@ -5,12 +5,13 @@ const AnswerSchema = new Schema({
   question: {
     type: Schema.ObjectId,
     ref: 'Question',
-    required: true
+    required: true,
+    unique: true
   },
   answer: {
     type: Schema.ObjectId,
     ref: 'Question.answer',
-    required: true
+    required: true,
   }
 })
 

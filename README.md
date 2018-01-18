@@ -46,3 +46,10 @@ Question.answer: references
 
 * Add marking functionality that checks if the question is right
 * Refactor the routes alot
+
+### REFACTOR-TODO
+* Add verfication for question / answer in Answer model (enum)
+
+### Remember
+
+* you can get module by question.module
