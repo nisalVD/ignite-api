@@ -56,7 +56,7 @@ router.post('/marking-test', (req,res) => {
         parsedAnswer.correct = correct
         return Marking.create(parsedAnswer)
       })
-      .then(marking => res.status(202).json(marking))
+      .then(marking => res.status(202).json({marking}))
       .catch(err => res.status(404).json({error: err.message}))
   })
 })

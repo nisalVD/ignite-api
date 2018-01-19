@@ -42,13 +42,14 @@ Question.answer: references
 * x View all questions for certain module
 * x Find all the answers for the question
 * x Make Answer table
+* x Add marking functionality that checks if the question is right
 * List marking associated with user
 
-* Add marking functionality that checks if the question is right
 * Refactor the routes alot
 
 ### REFACTOR-TODO
 * Add verfication for question / answer in Answer model (enum)
+* Add a better response to Post /marking (currently only response last marking)
 
 ### Remember
 * you can get module by question.module
