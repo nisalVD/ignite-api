@@ -28,14 +28,26 @@ router.get('/module/:id/questions', (req,res) => {
   })
 })
 
-// router.get('/user/:id/markings', (req,res) => {
-//   const userId = req.params.id
-//   const question = res.body.question
-//   const answer = res.body.answer
-// })
-
-// extra routes
-// Make new module
+router.post('/marking-test', (req,res) => {
+  const {quiz} = req.body
+  const userQuestionArray = []
+  for (var key in quiz) {
+    if (quiz.hasOwnProperty(key)) {
+      userQuestionArray.push(key)
+    }
+  }
+  userQuestionArray.forEach(question => {
+    Answer.find({question: question})
+      .then(foundQuestion => {
+        let correct = false 
+        console.log('found Question', foundQuestion)
+        // const correctAnswer = foundQuestion.answer
+        const userAnswer = quiz[question]
+        console.log('userAnswer', userAnswer)
+        console.log('correctAnswer', correctAnswer)
+      })
+  })
+})
 
 router.post('/marking', (req,res) => {
   const { question } = req.body
