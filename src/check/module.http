@@ -45,17 +45,9 @@ Content-Type: application/json
   "answer": "5a613549dd3a3ca7e2899fcf"
 }
 ### Give a marking for the question if its correct
-POST http://localhost:7000/marking
-Content-Type: application/json
-
-{
-  "user": "5a6063319a86d5938b321e0b",
-  "question": "5a6063029a86d5938b321e06",
-  "answer": "5a6063029a86d5938b321e09"
-}
 
 ### The marking section
-POST http://localhost:7000/marking-test
+POST http://localhost:7000/marking
 Content-Type: application/json
 
 {

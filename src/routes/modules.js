@@ -1,4 +1,5 @@
 const express = require('express')
+var mongoose = require('mongoose');
 const Module = require('../models/Module')
 const Question = require('../models/Question')
 const Marking = require('../models/Marking')
@@ -29,7 +30,7 @@ router.get('/module/:id/questions', (req,res) => {
 })
 
 // Marking where multiple question/answers are passed
-router.post('/marking-test', (req,res) => {
+router.post('/marking', (req,res) => {
   const {quiz} = req.body
   const userQuestionArray = []
   for (var key in quiz) {
@@ -61,37 +62,53 @@ router.post('/marking-test', (req,res) => {
   })
 })
 
-router.post('/marking', (req,res) => {
-  const { question } = req.body
-  const answer = req.body.answer
-  let correct = false; 
-  // console.log('user', user)
-  // console.log('question', question)
-  // console.log('answer', answer)
-  Answer.findOne({ question})
-    .then(question => {
-      const correctAnswer = question.answer
-      if(answer==correctAnswer) {
-        correct = true
-      }
-    })
-    .then(() => {
-      req.body.correct = correct
-      console.log(req.body)
-      return Marking.create(req.body)
-    })
-    .then(marking => res.status(202).json(marking))
-    .catch(err => res.status(404).json({error: err.message}))
-})
-
+// Find marking for Each user
 router.get('/user/:id/markings', (req,res) => {
   const {id} = req.params
   Marking.find({user: id})
-    .then(marking => {
-      res.status(401).json(marking)
+    .then(foundUser => {
+      if (foundUser){
+        res.status(202).json(foundUser)
+      } else {
+        res.status(404).json({
+          error: new Error(`user with ${id} not found`)
+        })
+      }
+    })
+    .catch((error) => {
+      res.status(400).json({ error: error.message })
     })
 })
-      
+
+// process.on('unhandledRejection', (reason, p) => {
+//   console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+  // application specific logging, throwing an error, or other logic here
+// });
+
+
+// router.post('/marking', (req,res) => {
+//   const { question } = req.body
+//   const answer = req.body.answer
+//   let correct = false; 
+//   // console.log('user', user)
+//   // console.log('question', question)
+//   // console.log('answer', answer)
+//   Answer.findOne({ question})
+//     .then(question => {
+//       const correctAnswer = question.answer
+//       if(answer==correctAnswer) {
+//         correct = true
+//       }
+//     })
+//     .then(() => {
+//       req.body.correct = correct
+//       console.log(req.body)
+//       return Marking.create(req.body)
+//     })
+//     .then(marking => res.status(202).json(marking))
+//     .catch(err => res.status(404).json({error: err.message}))
+// })
+
 router.get('/markings', (req,res) => {
   Marking.find()
     .then(marking => res.json(marking))
