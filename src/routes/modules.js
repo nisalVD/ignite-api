@@ -28,6 +28,7 @@ router.get('/module/:id/questions', (req,res) => {
   })
 })
 
+// Marking where multiple question/answers are passed
 router.post('/marking-test', (req,res) => {
   const {quiz} = req.body
   const userQuestionArray = []
@@ -37,15 +38,26 @@ router.post('/marking-test', (req,res) => {
     }
   }
   userQuestionArray.forEach(question => {
-    Answer.find({question: question})
+    Answer.findOne({question: question})
       .then(foundQuestion => {
         let correct = false 
-        console.log('found Question', foundQuestion)
-        // const correctAnswer = foundQuestion.answer
         const userAnswer = quiz[question]
-        console.log('userAnswer', userAnswer)
-        console.log('correctAnswer', correctAnswer)
+        console.log(userAnswer)
+        const correctAnswer = foundQuestion.answer
+        console.log(correctAnswer)
+        if (userAnswer == correctAnswer){
+          correct = true
+        }
+        console.log(correct)
+        let parsedAnswer = {}
+        parsedAnswer.user = req.body.user
+        parsedAnswer.question = question
+        parsedAnswer.answer = userAnswer
+        parsedAnswer.correct = correct
+        return Marking.create(parsedAnswer)
       })
+      .then(marking => res.status(202).json(marking))
+      .catch(err => res.status(404).json({error: err.message}))
   })
 })
 
@@ -65,6 +77,7 @@ router.post('/marking', (req,res) => {
     })
     .then(() => {
       req.body.correct = correct
+      console.log(req.body)
       return Marking.create(req.body)
     })
     .then(marking => res.status(202).json(marking))
