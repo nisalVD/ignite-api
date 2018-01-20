@@ -26,7 +26,7 @@ POST http://localhost:7000/question
 Content-Type: application/json
 
 {
-  "content":"Are you Jon Snow?",
+  "content":"is coder academy worth it?",
   "module": "5a6062f89a86d5938b321e05",
   "answers": [
     {"content": "Yes"},

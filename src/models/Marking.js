@@ -17,7 +17,6 @@ const MarkingSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Question',
     required: true,
-    unique: true
   }, 
   answer: {
     type: Schema.ObjectId,
