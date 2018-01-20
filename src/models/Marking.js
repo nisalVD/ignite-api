@@ -8,6 +8,11 @@ const MarkingSchema = new Schema({
     ref: 'User',
     required: true
   },
+  module: {
+    type: Schema.ObjectId,
+    ref: 'Module',
+    required: true
+  },
   question: {
     type: Schema.ObjectId,
     ref: 'Question',

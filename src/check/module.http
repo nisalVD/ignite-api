@@ -52,5 +52,6 @@ Content-Type: application/json
 
 {
   "user": "5a6063319a86d5938b321e0b",
+  "module": "5a6062f89a86d5938b321e05",
   "quiz": {"5a6063029a86d5938b321e06": "5a6063029a86d5938b321e08", "5a613549dd3a3ca7e2899fcd": "5a613549dd3a3ca7e2899fcf", "5a613556dd3a3ca7e2899fd2": "5a613556dd3a3ca7e2899fd4"}
 }

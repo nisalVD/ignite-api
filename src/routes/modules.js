@@ -52,6 +52,7 @@ router.post('/marking', (req,res) => {
         console.log(correct)
         let parsedAnswer = {}
         parsedAnswer.user = req.body.user
+        parsedAnswer.module = req.body.module
         parsedAnswer.question = question
         parsedAnswer.answer = userAnswer
         parsedAnswer.correct = correct
