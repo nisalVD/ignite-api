@@ -40,20 +40,15 @@ router.post('/marking', (req,res) => {
       userQuestionArray.push(key)
     }
   }
-  // console.log('quiz', quiz)
-  // console.log(userQuestionArray)
   Answer.find({question: {$in: userQuestionArray}})
     .then(foundAnswer=> {
       const parsedAnswerArray = foundAnswer.map(correctData => {
-        // console.log('correct answer', correctData.answer)
-        // console.log('correct question', correctData.question)
-
         const correctAnswer = correctData.answer
         const correctQuestion = correctData.question
         const parsedAnswer = {}
         parsedAnswer.user = user
         parsedAnswer.module = userModule
-        parsedAnswer.question = correctAnswer
+        parsedAnswer.question = correctQuestion
         parsedAnswer.answer = correctAnswer
         parsedAnswer.correct = false
         if(quiz[correctQuestion] == correctAnswer){
@@ -64,38 +59,30 @@ router.post('/marking', (req,res) => {
       return parsedAnswerArray
     })
     .then(parsedAnswerArray => {
-      Marking.insertMany(parsedAnswerArray)
-        .then(parsedAnswer => {
-          console.log('parsedAnswer', parsedAnswer)
-          res.status(201).json({parsedAnswer})
-        })
-        .catch(error => {
-          res.status(404).json({error: error.message})
-        })
+      const parsedAnswerQuestion = parsedAnswerArray.map(parsedAnswer => parsedAnswer.question)
+      console.log('parsed Answer Question', parsedAnswerQuestion)
+      const parsedAnswerUser = parsedAnswerArray.map(parsedAnswer => parsedAnswer.user)
+      console.log('pared Answer User', parsedAnswerUser)
+      let markingQueries = []
+
+      parsedAnswerArray.forEach(answer => {
+        markingQueries.push(
+          Marking.update(
+            {user: answer.user, question: answer.question, module: answer.module},
+            { answer: answer.answer, correct: answer.correct},
+            { upsert: true }
+          )
+        )
+        // .then(updateAnswer => {
+        //   res.status(202).json({updateAnswer})
+        //   .catch(error => { 
+        //     res.status(404).json({ error: error.message})
+        //   })
+        // })
+      })
+      Promise.all()
     })
-})
-  // const parsedAnswerArray = userQuestionArray.reduce(acc, question => {
-  //       let correct = false 
-  //       const userAnswer = quiz[question]
-  //       console.log(userAnswer)
-  //       const correctAnswer = foundQuestion.answer
-  //       console.log(correctAnswer)
-  //       if (userAnswer == correctAnswer){
-  //         correct = true
-  //       }
-  //       console.log(correct)
-  //       let parsedAnswer = {}
-  //       parsedAnswer.user = req.body.user
-  //       parsedAnswer.module = req.body.module
-  //       parsedAnswer.question = question
-  //       parsedAnswer.answer = userAnswer
-  //       parsedAnswer.correct = correct
-  //       // return Marking.create(parsedAnswer)
-  //       acc.push(parsedAnswer)
-  //       return acc
-  // }, [])
-  // console.log(parsedAnswerArray)
-// })
+  })
 
 // Find marking for Each user
 router.get('/user/:id/markings', (req,res) => {
@@ -111,14 +98,14 @@ router.get('/user/:id/markings', (req,res) => {
       }
     })
     .catch((error) => {
-      res.status(400).json({ error: error.message })
-    })
+      res.status(400).json({ error: error.message }) })
 })
 
 // Find All Users
 router.get('/users', (req,res) => {
   User.find()
     .then(user => res.status(202).json({user}))
+    .catch(error => res.status(404).json({error: error.message}))
 })
 
 // process.on('unhandledRejection', (reason, p) => {
@@ -199,5 +186,6 @@ router.get('/answers', (req, res) => {
   .then(answer => res.status(202).json(answer))
   .catch(err => res.status(404).send(err))
 })
+
 
 module.exports = router

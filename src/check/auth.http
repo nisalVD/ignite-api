@@ -13,7 +13,7 @@ Content-Type: application/json
   "dateOfBirth": "1995/02/01",
   "address": "10 blagh Street",
   "postCode": "3802",
-  "state": "VIC"
+  "state": "VIC",
 }
 
 ### Sign In

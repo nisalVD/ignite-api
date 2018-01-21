@@ -12,8 +12,8 @@ POST http://localhost:7000/question
 Content-Type: application/json
 
 {
-  "content":"Hello wadsfasfasdadsadasd are you?",
-  "module": "5a6374d5ec6f383d1f8c5b3b",
+  "content":"askfhaskhf kahf kashfk as",
+  "module": "5a63fb414e2c92499f5c15ea",
   "answers": [
     {"content": "A Racoon"},
     {"content": "A Horse"},
@@ -42,8 +42,8 @@ POST http://localhost:7000/Answer
 Content-Type: application/json
 
 {
-  "question": "5a637edf84145140f5a0fadd",
-  "answer": "5a637edf84145140f5a0fadf"
+  "question": "5a63fb5d4e2c92499f5c15fa",
+  "answer": "5a63fb5d4e2c92499f5c15fe"
 }
 ### Give a marking for the question if its correct
 
@@ -52,7 +52,11 @@ POST http://localhost:7000/marking
 Content-Type: application/json
 
 {
-  "user": "5a6063319a86d5938b321e0b",
-  "module": "5a6062f89a86d5938b321e05",
-  "quiz": {"5a6063029a86d5938b321e06": "5a6063029a86d5938b321e08", "5a613549dd3a3ca7e2899fcd": "5a613549dd3a3ca7e2899fcf", "5a613556dd3a3ca7e2899fd2": "5a613556dd3a3ca7e2899fd4"}
+  "user": "5a63ed54f48c99464d169b4a",
+  "quiz": {
+    "5a63752dec6f383d1f8c5b42": "5a63752dec6f383d1f8c5b45",
+    "5a637ed184145140f5a0fad8": "5a637ed184145140f5a0fada",
+    "5a637edf84145140f5a0fadd": "5a637edf84145140f5a0fadf"
+  },
+  "module": "5a6374d5ec6f383d1f8c5b3b"
 }

@@ -24,5 +24,7 @@ const MarkingSchema = new Schema({
     required: true
   }
 })
+MarkingSchema.index({ user: 1, question: 1 }, { unique: true });
+
 
 module.exports = mongoose.model('Marking', MarkingSchema)
