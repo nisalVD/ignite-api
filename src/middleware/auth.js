@@ -17,7 +17,8 @@ function register(req, res, next) {
     dateOfBirth: req.body.dateOfBirth,
     address: req.body.address,
     postCode: req.body.postCode,
-    state: req.body.state
+    state: req.body.state,
+    mobileNumber: req.body.mobileNumber
   })
   User.register(user, req.body.password, (error, user) => {
     if (error) {

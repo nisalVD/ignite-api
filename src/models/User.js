@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
   state: {
     type: String,
     required: "State cannot be blank"
+   },
+   mobileNumber: {
+     type: String,
+     required: "Mobile Number is required"
    }
 })
 
