@@ -3,6 +3,7 @@ const Module = require('../models/Module')
 const Question = require('../models/Question')
 const Marking = require('../models/Marking')
 const Answer = require('../models/Answer')
+const User = require('../models/User')
 
 const router = new express.Router()
 
@@ -140,6 +141,13 @@ router.get('/answers', (req, res) => {
   Answer.find()
   .then(answer => res.status(202).json(answer))
   .catch(err => res.status(404).send(err))
+})
+
+// List all the user data
+router.get('/users', (req,res) => {
+  User.find()
+    .then(user => res.status(202).json(user))
+    .catch(error => res.status(404).json({error: error.message}))
 })
 
 module.exports = router

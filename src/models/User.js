@@ -30,7 +30,11 @@ const userSchema = new mongoose.Schema({
    mobileNumber: {
      type: String,
      required: "Mobile Number is required"
-   }
+   },
+   isAdmin: {
+    type: Boolean,
+    default: false
+  }
 })
 
 userSchema.plugin(passportLocalMongoose, {

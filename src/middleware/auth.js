@@ -18,7 +18,8 @@ function register(req, res, next) {
     address: req.body.address,
     postCode: req.body.postCode,
     state: req.body.state,
-    mobileNumber: req.body.mobileNumber
+    mobileNumber: req.body.mobileNumber,
+    // isAdmin: req.body.isAdmin
   })
   User.register(user, req.body.password, (error, user) => {
     if (error) {
@@ -63,7 +64,8 @@ function signJWTForUser(req, res) {
   // Create signed token
   const token = JWT.sign(
     {
-      email: user.email
+      email: user.email,
+      admin: user.isAdmin
     },
       // secret
       jwtSecret,
@@ -71,7 +73,7 @@ function signJWTForUser(req, res) {
     {
       algorithm: jwtAlgorithm,
       expiresIn: jwtExpiresIn,
-      subject: user._id.toString() 
+      subject: user._id.toString(),
     }
   )
   // Send the token
