@@ -27,10 +27,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: "State cannot be blank"
    },
-   admin: {
-     type: Boolean,
-     default: false
-   }
+   mobileNumber: {
+     type: String,
+     required: "Mobile Number is required"
+   },
+   isAdmin: {
+    type: Boolean,
+    default: false
+  }
 })
 
 userSchema.plugin(passportLocalMongoose, {
