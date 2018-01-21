@@ -1,9 +1,9 @@
 const express = require('express')
-var mongoose = require('mongoose');
 const Module = require('../models/Module')
 const Question = require('../models/Question')
 const Marking = require('../models/Marking')
 const Answer = require('../models/Answer')
+const User = require('../models/User')
 
 const router = new express.Router()
 
@@ -31,37 +31,71 @@ router.get('/module/:id/questions', (req,res) => {
 
 // Marking where multiple question/answers are passed
 router.post('/marking', (req,res) => {
-  const {quiz} = req.body
+  const {quiz,user} = req.body
+  const userModule = req.body.module
+  // Find all keys for quiz
   const userQuestionArray = []
   for (var key in quiz) {
     if (quiz.hasOwnProperty(key)) {
       userQuestionArray.push(key)
     }
   }
-  userQuestionArray.forEach(question => {
-    Answer.findOne({question: question})
-      .then(foundQuestion => {
-        let correct = false 
-        const userAnswer = quiz[question]
-        console.log(userAnswer)
-        const correctAnswer = foundQuestion.answer
-        console.log(correctAnswer)
-        if (userAnswer == correctAnswer){
-          correct = true
+  // console.log('quiz', quiz)
+  // console.log(userQuestionArray)
+  Answer.find({question: {$in: userQuestionArray}})
+    .then(foundAnswer=> {
+      const parsedAnswerArray = foundAnswer.map(correctData => {
+        // console.log('correct answer', correctData.answer)
+        // console.log('correct question', correctData.question)
+
+        const correctAnswer = correctData.answer
+        const correctQuestion = correctData.question
+        const parsedAnswer = {}
+        parsedAnswer.user = user
+        parsedAnswer.module = userModule
+        parsedAnswer.question = correctAnswer
+        parsedAnswer.answer = correctAnswer
+        parsedAnswer.correct = false
+        if(quiz[correctQuestion] == correctAnswer){
+          parsedAnswer.correct = true
         }
-        console.log(correct)
-        let parsedAnswer = {}
-        parsedAnswer.user = req.body.user
-        parsedAnswer.module = req.body.module
-        parsedAnswer.question = question
-        parsedAnswer.answer = userAnswer
-        parsedAnswer.correct = correct
-        return Marking.create(parsedAnswer)
+        return parsedAnswer
       })
-      .then(marking => res.status(202).json({marking}))
-      .catch(err => res.status(404).json({error: err.message}))
-  })
+      return parsedAnswerArray
+    })
+    .then(parsedAnswerArray => {
+      Marking.insertMany(parsedAnswerArray)
+        .then(parsedAnswer => {
+          console.log('parsedAnswer', parsedAnswer)
+          res.status(201).json({parsedAnswer})
+        })
+        .catch(error => {
+          res.status(404).json({error: error.message})
+        })
+    })
 })
+  // const parsedAnswerArray = userQuestionArray.reduce(acc, question => {
+  //       let correct = false 
+  //       const userAnswer = quiz[question]
+  //       console.log(userAnswer)
+  //       const correctAnswer = foundQuestion.answer
+  //       console.log(correctAnswer)
+  //       if (userAnswer == correctAnswer){
+  //         correct = true
+  //       }
+  //       console.log(correct)
+  //       let parsedAnswer = {}
+  //       parsedAnswer.user = req.body.user
+  //       parsedAnswer.module = req.body.module
+  //       parsedAnswer.question = question
+  //       parsedAnswer.answer = userAnswer
+  //       parsedAnswer.correct = correct
+  //       // return Marking.create(parsedAnswer)
+  //       acc.push(parsedAnswer)
+  //       return acc
+  // }, [])
+  // console.log(parsedAnswerArray)
+// })
 
 // Find marking for Each user
 router.get('/user/:id/markings', (req,res) => {
@@ -79,6 +113,12 @@ router.get('/user/:id/markings', (req,res) => {
     .catch((error) => {
       res.status(400).json({ error: error.message })
     })
+})
+
+// Find All Users
+router.get('/users', (req,res) => {
+  User.find()
+    .then(user => res.status(202).json({user}))
 })
 
 // process.on('unhandledRejection', (reason, p) => {
