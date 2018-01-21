@@ -1,6 +1,7 @@
 /*@flow*/
 const mongoose = require('./init')
 const passportLocalMongoose = require('passport-local-mongoose')
+const Schema = mongoose.Schema
 
 const userSchema = new mongoose.Schema({ 
   firstName: {
@@ -31,6 +32,10 @@ const userSchema = new mongoose.Schema({
      type: String,
      required: "Mobile Number is required"
    },
+   modulesCompleted: [{
+    type: Schema.ObjectId,
+    ref: 'Module',
+    }],
    isAdmin: {
     type: Boolean,
     default: false
