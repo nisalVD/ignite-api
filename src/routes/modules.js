@@ -76,12 +76,7 @@ router.post('/marking', (req,res) => {
       return parsedAnswerArray
     })
     .then(parsedAnswerArray => {
-      const parsedAnswerQuestion = parsedAnswerArray.map(parsedAnswer => parsedAnswer.question)
-      console.log('parsed Answer Question', parsedAnswerQuestion)
-      const parsedAnswerUser = parsedAnswerArray.map(parsedAnswer => parsedAnswer.user)
-      console.log('pared Answer User', parsedAnswerUser)
       let markingQueries = []
-
       parsedAnswerArray.forEach(answer => {
         markingQueries.push(
           Marking.update(
@@ -90,14 +85,14 @@ router.post('/marking', (req,res) => {
             { upsert: true }
           )
         )
-        // .then(updateAnswer => {
-        //   res.status(202).json({updateAnswer})
-        //   .catch(error => { 
-        //     res.status(404).json({ error: error.message})
-        //   })
-        // })
       })
-      Promise.all()
+      return Promise.all(markingQueries)
+    })
+    .then(listOfMarkings => {
+      res.status(202).json(listOfMarkings)
+    })
+    .catch(error => {
+      res.status(500).json({error: error.message})
     })
   })
 
@@ -145,30 +140,6 @@ router.delete('/module/:id', (req, res) => {
 //   console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
   // application specific logging, throwing an error, or other logic here
 // });
-
-
-// router.post('/marking', (req,res) => {
-//   const { question } = req.body
-//   const answer = req.body.answer
-//   let correct = false; 
-//   // console.log('user', user)
-//   // console.log('question', question)
-//   // console.log('answer', answer)
-//   Answer.findOne({ question})
-//     .then(question => {
-//       const correctAnswer = question.answer
-//       if(answer==correctAnswer) {
-//         correct = true
-//       }
-//     })
-//     .then(() => {
-//       req.body.correct = correct
-//       console.log(req.body)
-//       return Marking.create(req.body)
-//     })
-//     .then(marking => res.status(202).json(marking))
-//     .catch(err => res.status(404).json({error: err.message}))
-// })
 
 router.get('/markings', (req,res) => {
   Marking.find()

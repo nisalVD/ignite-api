@@ -3,7 +3,7 @@ POST http://localhost:7000/module
 Content-Type: application/json
 
 {
-  "name":"Best Module",
+  "name":"Best Module 5",
   "content":"The best module in the world"
 }
 #### Make a question with module 

@@ -48,6 +48,8 @@ Question.answer: references
 * Refactor the routes alot
 
 ### REFACTOR-TODO
+## IMPORTANT
+* Add Promise.all to the router for markings, its currectly synchronous
 * Add verfication for question / answer in Answer model (enum)
 * Add a better response to Post /marking (currently only response last marking)
 
