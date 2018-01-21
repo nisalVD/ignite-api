@@ -62,3 +62,7 @@ Content-Type: application/json
   "user": "5a6063319a86d5938b321e0b",
   "quiz": {"5a6063029a86d5938b321e06": "5a6063029a86d5938b321e08", "5a613549dd3a3ca7e2899fcd": "5a613549dd3a3ca7e2899fcf", "5a613556dd3a3ca7e2899fd2": "5a613556dd3a3ca7e2899fd4"}
 }
+
+### 
+
+DELETE http://localhost:7000/module/5a6454a0879d7436afa3b055

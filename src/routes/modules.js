@@ -20,6 +20,23 @@ router.post('/module', (req,res) => {
     .catch(err => res.send(err))
 })
 
+// Delete Module by ID
+router.delete('/module/:id', (req, res) => {
+  const {id} = req.params
+  Module.findByIdAndRemove(id)
+    .then(module => {
+      if(module){
+        res.status(202).json(module)
+      }
+      else {
+        res.status(404).json(`module with ${id} not found`)
+      }
+    })
+    .catch(error => {
+      res.status(404).json({error: error.message})
+    })
+})
+
 // Find all the questions for the module
 router.get('/module/:id/questions', (req,res) => {
   const moduleId = req.params.id
