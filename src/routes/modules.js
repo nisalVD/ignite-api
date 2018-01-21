@@ -121,7 +121,7 @@ router.get('/user/:id/markings', (req,res) => {
 // Find All Users
 router.get('/users', (req,res) => {
   User.find()
-    .then(user => res.status(202).json({user}))
+    .then(user => res.status(202).json(user))
     .catch(error => res.status(404).json({error: error.message}))
 })
 
