@@ -108,6 +108,22 @@ router.get('/users', (req,res) => {
     .catch(error => res.status(404).json({error: error.message}))
 })
 
+// delete module by Id
+router.delete('/module/:id', (req, res) => {
+  const {id} = req.params
+  Module.findByIdAndRemove(id)
+    .then(module => {
+      if(module){
+        res.status(202).json(module)
+      }
+      else {
+        res.status(404).json(`module with ${id} not found`)
+      }
+    })
+    .catch(error => {
+      res.status(404).json({error: error.message})
+    })
+})
 // process.on('unhandledRejection', (reason, p) => {
 //   console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
   // application specific logging, throwing an error, or other logic here
@@ -167,13 +183,6 @@ router.get('/question/:id/answers', (req, res) => {
   .catch(err => res.status(404).send.err(err))
 })
 
-
-
-// router.post('/marking', (req,res) => {
-//   Marking.create(req.body)
-//     .then(marking => res.status(201).json(marking))
-//     .catch(err => res.send(err))
-// })
 
 router.post('/answer', (req,res) => {
   Answer.create(req.body)
