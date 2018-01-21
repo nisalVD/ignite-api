@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
    modulesCompleted: [{
     type: Schema.ObjectId,
     ref: 'Module',
-    }],
+  }],
    isAdmin: {
     type: Boolean,
     default: false
