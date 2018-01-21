@@ -3,7 +3,8 @@ POST http://localhost:7000/module
 Content-Type: application/json
 
 {
-  "name":"Module 1"
+  "name":"Best Module",
+  "content":"The best module in the world"
 }
 #### Make a question with module 
 
@@ -11,8 +12,8 @@ POST http://localhost:7000/question
 Content-Type: application/json
 
 {
-  "content":"Hello who are you?",
-  "module": "5a6062f89a86d5938b321e05",
+  "content":"askfhaskhf kahf kashfk as",
+  "module": "5a63fb414e2c92499f5c15ea",
   "answers": [
     {"content": "A Racoon"},
     {"content": "A Horse"},
@@ -26,8 +27,8 @@ POST http://localhost:7000/question
 Content-Type: application/json
 
 {
-  "content":"Are you Jon Snow?",
-  "module": "5a6062f89a86d5938b321e05",
+  "content":"is coder academy worth it?",
+  "module": "5a62c1d8c87aa2eecae817d2",
   "answers": [
     {"content": "Yes"},
     {"content": "No"},
@@ -41,21 +42,13 @@ POST http://localhost:7000/Answer
 Content-Type: application/json
 
 {
-  "question": "5a613549dd3a3ca7e2899fcd",
-  "answer": "5a613549dd3a3ca7e2899fcf"
+  "question": "5a63fb5d4e2c92499f5c15fa",
+  "answer": "5a63fb5d4e2c92499f5c15fe"
 }
 ### Give a marking for the question if its correct
-POST http://localhost:7000/marking
-Content-Type: application/json
-
-{
-  "user": "5a6063319a86d5938b321e0b",
-  "question": "5a6063029a86d5938b321e06",
-  "answer": "5a6063029a86d5938b321e09"
-}
 
 ### The marking section
-POST http://localhost:7000/marking-test
+POST http://localhost:7000/marking
 Content-Type: application/json
 
 {
@@ -66,3 +59,4 @@ Content-Type: application/json
 ### 
 
 DELETE http://localhost:7000/module/5a6454a0879d7436afa3b055
+

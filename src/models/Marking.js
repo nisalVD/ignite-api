@@ -8,10 +8,15 @@ const MarkingSchema = new Schema({
     ref: 'User',
     required: true
   },
+  module: {
+    type: Schema.ObjectId,
+    ref: 'Module',
+    required: true
+  },
   question: {
     type: Schema.ObjectId,
     ref: 'Question',
-    required: true
+    required: true,
   }, 
   answer: {
     type: Schema.ObjectId,
@@ -19,5 +24,7 @@ const MarkingSchema = new Schema({
     required: true
   }
 })
+MarkingSchema.index({ user: 1, question: 1 }, { unique: true });
+
 
 module.exports = mongoose.model('Marking', MarkingSchema)
