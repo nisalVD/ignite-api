@@ -48,53 +48,70 @@ router.get('/module/:id/questions', (req,res) => {
 
 // Marking where multiple question/answers are passed
 router.post('/marking', (req,res) => {
+  let isComplete; 
   const {quiz,user} = req.body
   const userModule = req.body.module
-  // Find all keys for quiz
-  const userQuestionArray = []
-  for (var key in quiz) {
-    if (quiz.hasOwnProperty(key)) {
-      userQuestionArray.push(key)
-    }
-  }
-  Answer.find({question: {$in: userQuestionArray}})
-    .then(foundAnswer=> {
-      const parsedAnswerArray = foundAnswer.map(correctData => {
-        const correctAnswer = correctData.answer
-        const correctQuestion = correctData.question
-        const parsedAnswer = {}
-        parsedAnswer.user = user
-        parsedAnswer.module = userModule
-        parsedAnswer.question = correctQuestion
-        parsedAnswer.answer = correctAnswer
-        parsedAnswer.correct = false
-        if(quiz[correctQuestion] == correctAnswer){
-          parsedAnswer.correct = true
+  Marking.find({user : user, module: userModule})
+    .then(foundData => {
+      foundData.forEach(data => {
+        if (data.correct === true){
+          isComplete = true
+        }  else {
+          isComplete = false
         }
-        return parsedAnswer
       })
-      return parsedAnswerArray
     })
-    .then(parsedAnswerArray => {
-      let markingQueries = []
-      parsedAnswerArray.forEach(answer => {
-        markingQueries.push(
-          Marking.update(
-            {user: answer.user, question: answer.question, module: answer.module},
-            { answer: answer.answer, correct: answer.correct},
-            { upsert: true }
-          )
-        )
-      })
-      return Promise.all(markingQueries)
-    })
-    .then(listOfMarkings => {
-      res.status(202).json(listOfMarkings)
-    })
-    .catch(error => {
-      res.status(500).json({error: error.message})
-    })
+    .then(() => {
+        // If only there is atleast 1 false question run this
+      if (isComplete === false) {
+        // Find all keys for quiz
+        const userQuestionArray = []
+        for (var key in quiz) {
+          if (quiz.hasOwnProperty(key)) {
+            userQuestionArray.push(key)
+          }
+        }
+        Answer.find({question: {$in: userQuestionArray}})
+          .then(foundAnswer=> {
+            const parsedAnswerArray = foundAnswer.map(correctData => {
+              const correctAnswer = correctData.answer
+              const correctQuestion = correctData.question
+              const parsedAnswer = {}
+              parsedAnswer.user = user
+              parsedAnswer.module = userModule
+              parsedAnswer.question = correctQuestion
+              parsedAnswer.answer = correctAnswer
+              parsedAnswer.correct = false
+              if(quiz[correctQuestion] == correctAnswer){
+                parsedAnswer.correct = true
+              }
+              return parsedAnswer
+            })
+            return parsedAnswerArray
+          })
+          .then(parsedAnswerArray => {
+            let markingQueries = []
+            parsedAnswerArray.forEach(answer => {
+              markingQueries.push(
+                Marking.update(
+                  {user: answer.user, question: answer.question, module: answer.module},
+                  { answer: answer.answer, correct: answer.correct},
+                  { upsert: true }
+                )
+              )
+            })
+            return Promise.all(markingQueries)
+          })
+          .then(listOfMarkings => {
+            res.status(202).json(listOfMarkings)
+          })
+          .catch(error => {
+            res.status(500).json({error: error.message})
+          })
+      }
   })
+  .catch(error => res.status(500).json({error: error.message}))
+})
 
 // Find marking for Each user
 router.get('/user/:id/markings', (req,res) => {
