@@ -48,7 +48,7 @@ router.get('/module/:id/questions', (req,res) => {
 
 // Marking where multiple question/answers are passed
 router.post('/marking', (req,res) => {
-  let isComplete; 
+  let isComplete = false 
   const {quiz,user} = req.body
   const userModule = req.body.module
   Marking.find({user : user, module: userModule})
