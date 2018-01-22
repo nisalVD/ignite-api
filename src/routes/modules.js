@@ -52,16 +52,19 @@ router.post('/marking', (req,res) => {
   const {quiz,user} = req.body
   const userModule = req.body.module
   Marking.find({user : user, module: userModule})
-    .then(foundData => {
-      foundData.forEach(data => {
-        if (data.correct === true){
-          isComplete = true
-        }  else {
-          isComplete = false
-        }
-      })
+    .then(foundMarkings => {
+      function isEveryTrue(element){
+        return element.correct === true
+      }
+      if(foundMarkings.length > 0) {
+        isComplete = foundMarkings.every(isEveryTrue)
+      } else {
+        isComplete = false
+      }
+      return isComplete
     })
     .then(() => {
+      console.log('isComplete', isComplete)
         // If only there is atleast 1 false question run this
       if (isComplete === false) {
         // Find all keys for quiz
