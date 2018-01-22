@@ -64,7 +64,6 @@ router.post('/marking', (req,res) => {
       return isComplete
     })
     .then(() => {
-      console.log('isComplete', isComplete)
         // If only there is atleast 1 false question run this
       if (isComplete === false) {
         // Find all keys for quiz
