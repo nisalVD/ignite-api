@@ -115,6 +115,23 @@ router.post('/marking', (req,res) => {
   .catch(error => res.status(500).json({error: error.message}))
 })
 
+// Find marking for Each user
+router.get('/user/:id/markings', (req,res) => {
+  const {id} = req.params
+  Marking.find({user: id})
+    .then(foundUser => {
+      if (foundUser){
+        res.status(202).json(foundUser)
+      } else {
+        res.status(404).json({
+          error: new Error(`user with ${id} not found`)
+        })
+      }
+    })
+    .catch((error) => {
+      res.status(400).json({ error: error.message }) })
+})
+
 // incorrect Answers
 router.get('/user/:id/markings/incorrect', (req,res) => {
   const {id} = req.params
