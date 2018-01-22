@@ -115,10 +115,11 @@ router.post('/marking', (req,res) => {
   .catch(error => res.status(500).json({error: error.message}))
 })
 
-// Find marking for Each user
-router.get('/user/:id/markings', (req,res) => {
+// incorrect Answers
+router.get('/user/:id/markings/incorrect', (req,res) => {
   const {id} = req.params
-  Marking.find({user: id})
+  Marking.find({user: id, correct: false})
+    .populate('question')
     .then(foundUser => {
       if (foundUser){
         res.status(202).json(foundUser)
