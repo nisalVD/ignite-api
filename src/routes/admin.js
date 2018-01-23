@@ -13,6 +13,13 @@ router.get('/users', (req,res) => {
     .catch(error => res.status(404).json({error: error.message}))
 })
 
+// Add new module
+router.post('/module', (req,res) => {
+  Module.create(req.body)
+    .then(newModule => res.status(201).json(newModule))
+    .catch(err => res.send(err))
+})
+
 // Delete Module by ID
 router.delete('/module/:id', (req, res) => {
   const {id} = req.params
