@@ -3,24 +3,25 @@ const Module = require('../models/Module')
 const Question = require('../models/Question')
 const Answer = require('../models/Answer')
 const User = require('../models/User')
+const requireAdmin = require('../middleware/admin')
 
 const router = new express.Router()
 // Find All user data
-router.get('/users', (req,res) => {
+router.get('/users', requireAdmin,  (req,res) => {
   User.find()
     .then(user => res.status(202).json(user))
     .catch(error => res.status(404).json({error: error.message}))
 })
 
 // Add new module
-router.post('/module', (req,res) => {
+router.post('/module', requireAdmin, (req,res) => {
   Module.create(req.body)
     .then(newModule => res.status(201).json(newModule))
     .catch(err => res.send(err))
 })
 
 // Delete Module by ID
-router.delete('/module/:id', (req, res) => {
+router.delete('/module/:id', requireAdmin, (req, res) => {
   const {id} = req.params
   Module.findByIdAndRemove(id)
     .then(module => {
@@ -37,35 +38,35 @@ router.delete('/module/:id', (req, res) => {
 })
 
 // List all questions
-router.get('/questions', (req, res) => {
+router.get('/questions', requireAdmin, (req, res) => {
   Question.find()
   .then(question => res.status(202).json(question))
   .catch(err => res.status(404).send(err))
 })
 
 // Add a new question
-router.post('/question', (req,res) => {
+router.post('/question', requireAdmin, (req,res) => {
   Question.create(req.body)
     .then(question => res.status(201).json(question))
     .catch(err => res.send(err))
 })
 
 // List all the answers
-router.get('/answers', (req, res) => {
+router.get('/answers', requireAdmin, (req, res) => {
   Answer.find()
   .then(answer => res.status(202).json(answer))
   .catch(err => res.status(404).send(err))
 })
 
 // Add new answers
-router.post('/answer', (req,res) => {
+router.post('/answer', requireAdmin, (req,res) => {
   Answer.create(req.body)
     .then(answer => res.status(201).json(answer))
     .catch(err => res.send(err))
 })
 
 // delete a question by id
-router.delete('/question/:id', (req,res) => {
+router.delete('/question/:id', requireAdmin, (req,res) => {
   const {id} = req.params
   Question.findByIdAndRemove(id)
     .then(question => {
@@ -82,7 +83,7 @@ router.delete('/question/:id', (req,res) => {
 })
 
 // delete answer by question id
-router.delete('/question/:id/answer', (req ,res) => {
+router.delete('/question/:id/answer', requireAdmin, (req ,res) => {
   const {id} = req.params
   Answer.remove({question: id})
   .then(question => {

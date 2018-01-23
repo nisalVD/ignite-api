@@ -2,10 +2,10 @@ POST http://localhost:7000/auth
 Content-Type: application/json
 
 {
-  "email": "admin@admin.com",
+  "email": "a@b.com",
   "password": "password"
 }
 
 ### asfasf
-GET http://localhost:7000/test
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYi5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTUxNjczNjAzOCwiZXhwIjoxNTE3MzQwODM4LCJzdWIiOiI1YTY3OGUyNTY1NjNkNmUzYTlhM2NjMTIifQ.pkn27QahtCIZF1KUPUKRK_PxMOJl0DSCqPHhgLJQwCA
+GET http://localhost:7000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYi5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTUxNjczNzQyNSwiZXhwIjoxNTE3MzQyMjI1LCJzdWIiOiI1YTY3OGUyNTY1NjNkNmUzYTlhM2NjMTIifQ.4UmWga-2mHAUJk3MlbCiYfGWD6ybjC5usGTp4ezwiyk
