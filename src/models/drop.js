@@ -4,10 +4,10 @@ const Question = require('./Question')
 const Marking = require('./Marking')
 const Answer = require('./Answer')
 
-// User.deleteMany() 
-//   .then(() => {
-//     console.log('deleted users')
-//   })
+User.deleteMany() 
+  .then(() => {
+    console.log('deleted users')
+  })
 
 Module.deleteMany()
   .then(() => {

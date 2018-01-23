@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     type: Schema.ObjectId,
     ref: 'Module',
   }],
-   isAdmin: {
+   admin: {
     type: Boolean,
     default: false
   }
