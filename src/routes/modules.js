@@ -221,4 +221,36 @@ router.get('/answers', (req, res) => {
   .catch(err => res.status(404).send(err))
 })
 
+router.delete('/question/:id', (req,res) => {
+  const {id} = req.params
+  Question.findByIdAndRemove(id)
+    .then(question => {
+      if(question){
+        res.status(202).json(question)
+      }
+      else {
+        res.status(404).json(`question with ${id} not found`)
+      }
+    })
+    .catch(error => {
+      res.status(404).json({error: error.message})
+    })
+})
+
+router.delete('/question/:id/answer', (req ,res) => {
+  const {id} = req.params
+  Answer.remove({question: id})
+  .then(question => {
+    if(question){
+      res.status(202).json(question)
+    }
+    else {
+      res.status(404).json(`question with ${id} not found`)
+    }
+  })
+  .catch(error => {
+    res.status(404).json({error: error.message})
+  })
+})
+
 module.exports = router
