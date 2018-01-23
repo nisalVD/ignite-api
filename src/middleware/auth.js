@@ -3,7 +3,7 @@ const JWT = require('jsonwebtoken')
 const passportJwt = require('passport-jwt')
 const User = require('../models/User')
 
-const jwtSecret = 'placeholder-jwt-secret'
+const jwtSecret = process.env.JWT_SECRET
 const jwtAlgorithm = 'HS256'
 const jwtExpiresIn = '7 days'
 
@@ -19,7 +19,7 @@ function register(req, res, next) {
     postCode: req.body.postCode,
     state: req.body.state,
     mobileNumber: req.body.mobileNumber,
-    admin: req.body.admin
+    // admin: req.body.admin
   })
   User.register(user, req.body.password, (error, user) => {
     if (error) {

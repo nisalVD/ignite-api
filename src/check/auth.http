@@ -1,5 +1,5 @@
 GET http://localhost:7000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAbC5jb20iLCJpYXQiOjE1MTYyMDAxMzQsImV4cCI6MTUxNjgwNDkzNCwic3ViIjoiNWE1ZjYwYjg0YzE0MWI2MzQ4YTY5NTc4In0.9yQAZNY86mpDQDK7o6-rylIMzSqp1DU3x66rIPtYHcQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTY3Mzc5NzUsImV4cCI6MTUxNzM0Mjc3NSwic3ViIjoiNWE2Nzc3OTRiYjEzMjRkYzMwODhiMzhjIn0.jH2MtpI5GUJe8r_Ft_YQfv8fj7ktslRtT_EWAK0Mx8s
 
 ### Register
 POST http://localhost:7000/auth/register
@@ -22,6 +22,6 @@ POST http://localhost:7000/auth
 Content-Type: application/json
 
 {
-  "email": "admin@ignite.com",
+  "email": "admin@admin.com",
   "password": "password"
 }

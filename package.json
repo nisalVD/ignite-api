@@ -16,11 +16,14 @@
     "passport-local-mongoose": "^4.4.0"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1"
+    "dotenv": "^4.0.0",
+    "nodemon": "^1.12.1",
+    "now": "^9.2.7"
   },
   "scripts": {
     "dev": "nodemon src/server.js",
     "drop": "node src/models/drop.js",
-    "seed": "node src/models/seed.js"
+    "seed": "node src/models/seed.js",
+    "start": "node server.js"
   }
 }

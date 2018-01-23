@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const jwtSecret = 'placeholder-jwt-secret'
+const jwtSecret = process.env.JWT_SECRET
 const jwtAlgorithm = 'HS256'
 
 function requireAdmin(req, res, next) {
