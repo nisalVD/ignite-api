@@ -16,7 +16,9 @@ server.use(cors())
 
 server.use([
   require('./routes/auth'),
-  require('./routes/modules')
+  require('./routes/modules'),
+  require('./routes/question'),
+  require('./routes/admin')
 ])
 
 server.get("/", authMiddleware.requireJWT, (req,res) => {
