@@ -1,7 +1,6 @@
 const express = require('express')
 const Module = require('../models/Module')
 const Question = require('../models/Question')
-const Marking = require('../models/Marking')
 const Answer = require('../models/Answer')
 const User = require('../models/User')
 
