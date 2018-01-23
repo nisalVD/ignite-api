@@ -1,11 +1,12 @@
 const express = require('express')
 const Marking = require('../models/Marking')
 const Answer = require('../models/Answer')
+const authMiddleware = require('../middleware/auth')
 
 const router = new express.Router()
 
 // Marking where multiple question/answers are passed
-router.post('/marking', (req,res) => {
+router.post('/marking', authMiddleware.requireJWT, (req,res) => {
   let isComplete = false 
   const {quiz,user} = req.body
   const userModule = req.body.module
@@ -74,7 +75,7 @@ router.post('/marking', (req,res) => {
 })
 
 // Find marking for Each user
-router.get('/user/:id/markings', (req,res) => {
+router.get('/user/:id/markings', authMiddleware.requireJWT, (req,res) => {
   const {id} = req.params
   Marking.find({user: id})
     .then(foundUser => {
@@ -91,7 +92,7 @@ router.get('/user/:id/markings', (req,res) => {
 })
 
 // incorrect Answers
-router.get('/user/:id/markings/incorrect', (req,res) => {
+router.get('/user/:id/markings/incorrect', authMiddleware.requireJWT, (req,res) => {
   const {id} = req.params
   Marking.find({user: id, correct: false})
     .populate('question')

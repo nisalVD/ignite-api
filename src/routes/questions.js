@@ -1,10 +1,11 @@
 const express = require('express')
 const Question = require('../models/Question')
+const authMiddleware = require('../middleware/auth')
 
 const router = new express.Router()
 
 // find all the questions under certain module ID
-router.get('/module/:id/questions', (req,res) => {
+router.get('/module/:id/questions', authMiddleware.requireJWT, (req,res) => {
   const moduleId = req.params.id
   Question.find({ module: moduleId })
   .then(question => {
@@ -12,7 +13,7 @@ router.get('/module/:id/questions', (req,res) => {
   })
 })
 // List all answers for an question
-router.get('/question/:id/answers', (req, res) => {
+router.get('/question/:id/answers', authMiddleware.requireJWT, (req, res) => {
   const questionId = req.params.id
   Question.findById(questionId)
   .then(question => {
