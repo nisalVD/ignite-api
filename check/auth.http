@@ -1,8 +1,8 @@
-GET http://localhost:7000
+GET http://https://ignite-api-thddfwkmye.now.sh/:7000
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTY3Mzc5NzUsImV4cCI6MTUxNzM0Mjc3NSwic3ViIjoiNWE2Nzc3OTRiYjEzMjRkYzMwODhiMzhjIn0.jH2MtpI5GUJe8r_Ft_YQfv8fj7ktslRtT_EWAK0Mx8s
 
 ### Register
-POST http://localhost:7000/auth/register
+POST http://https://ignite-api-thddfwkmye.now.sh/:7000/auth/register
 Content-Type: application/json
 
 {

@@ -49,7 +49,7 @@ Content-Type: application/json
 ### Give a marking for the question if its correct
 
 ### The marking section
-POST http://localhost:7000/marking
+POST https://ignite-api-thddfwkmye.now.sh/
 Content-Type: application/json
 
 {
