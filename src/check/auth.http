@@ -6,7 +6,7 @@ POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
-  "email": "nisal@ignite.com",
+  "email": "admin@admin.com",
   "firstName": "Admin",
   "lastName": "User",
   "password": "password",
@@ -15,7 +15,7 @@ Content-Type: application/json
   "postCode": "3802",
   "state": "VIC",
   "mobileNumber": "0404040404",
-  "isAdmin": true
+  "admin": true
 }
 
 ### Sign In

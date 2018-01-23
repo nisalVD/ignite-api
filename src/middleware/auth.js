@@ -19,7 +19,7 @@ function register(req, res, next) {
     postCode: req.body.postCode,
     state: req.body.state,
     mobileNumber: req.body.mobileNumber,
-    // isAdmin: req.body.isAdmin
+    admin: req.body.admin
   })
   User.register(user, req.body.password, (error, user) => {
     if (error) {
