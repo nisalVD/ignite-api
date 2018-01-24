@@ -7,6 +7,10 @@ Content-Type: application/json
   "name":"The module 1",
   "content":"The best module in the world"
 }
+
+### 
+GET http://localhost:7000/module/5a6062f89a86d5938b321e05/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTY3ODM2ODIsImV4cCI6MTUxNzM4ODQ4Miwic3ViIjoiNWE2Nzc3OTRiYjEzMjRkYzMwODhiMzhjIn0.rGvm9tuRH5jGcteR6uAJ7CI8WHQVRNzBmzhYkYwWIj0
 #### Make a question with module 
 
 POST http://localhost:7000/question
