@@ -3,6 +3,7 @@ const Module = require('../models/Module')
 const Question = require('../models/Question')
 const Answer = require('../models/Answer')
 const User = require('../models/User')
+const Marking = require('../models/Marking')
 const requireAdmin = require('../middleware/admin')
 
 const router = new express.Router()
@@ -97,6 +98,12 @@ router.delete('/question/:id/answer', requireAdmin, (req ,res) => {
   .catch(error => {
     res.status(404).json({error: error.message})
   })
+})
+
+router.get('/markings', requireAdmin, (req,res) => {
+  Marking.find()
+    .then(markings => res.status(202).json(markings))
+    .catch(error => res.status(500).json(error))
 })
 
 module.exports = router
