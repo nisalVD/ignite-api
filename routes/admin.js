@@ -100,7 +100,7 @@ router.delete('/question/:id/answer', requireAdmin, (req ,res) => {
   })
 })
 
-router.get('/markings', requireAdmin, (req,res) => {
+router.get('/markings',  (req,res) => {
   Marking.find()
     .then(markings => res.status(202).json(markings))
     .catch(error => res.status(500).json(error))
