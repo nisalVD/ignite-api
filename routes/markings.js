@@ -92,9 +92,10 @@ router.get('/user/:id/markings', authMiddleware.requireJWT, (req,res) => {
 })
 
 // incorrect Answers
-router.get('/user/:id/markings/incorrect', authMiddleware.requireJWT, (req,res) => {
+router.get('/user/:id/module/:modid/markings/incorrect', authMiddleware.requireJWT, (req,res) => {
   const {id} = req.params
-  Marking.find({user: id, correct: false})
+  const {modid} = req.params
+  Marking.find({user: id, correct: false, module: modid})
     .populate('question')
     .then(foundUser => {
       if (foundUser){
