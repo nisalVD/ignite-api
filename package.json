@@ -20,7 +20,7 @@
     "now": "^9.2.7"
   },
   "scripts": {
-    "dev": "nodemon src/server.js",
+    "dev": "nodemon server.js",
     "drop": "node models/drop.js",
     "seed": "node models/seed.js",
     "start": "node server.js",
