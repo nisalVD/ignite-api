@@ -48,14 +48,7 @@ router.post('/marking', authMiddleware.requireJWT, (req,res) => {
                 answer: correctAnswer,
                 correct: correct
               }
-              // parsedAnswer.user = user
-              // parsedAnswer.module = userModule
-              // parsedAnswer.question = correctQuestion
-              // parsedAnswer.answer = correctAnswer
-              // parsedAnswer.correct = false
-              // if(quiz[correctQuestion] == correctAnswer){
-              //   parsedAnswer.correct = true
-              // }
+
               return parsedAnswer
             })
             return parsedAnswerArray
