@@ -37,15 +37,25 @@ router.post('/marking', authMiddleware.requireJWT, (req,res) => {
             const parsedAnswerArray = foundAnswer.map(correctData => {
               const correctAnswer = correctData.answer
               const correctQuestion = correctData.question
-              const parsedAnswer = {}
-              parsedAnswer.user = user
-              parsedAnswer.module = userModule
-              parsedAnswer.question = correctQuestion
-              parsedAnswer.answer = correctAnswer
-              parsedAnswer.correct = false
+              let correct = false
               if(quiz[correctQuestion] == correctAnswer){
-                parsedAnswer.correct = true
+                correct = true
               }
+              const parsedAnswer = {
+                user: user,
+                module: userModule,
+                question: correctQuestion,
+                answer: correctAnswer,
+                correct: correct
+              }
+              // parsedAnswer.user = user
+              // parsedAnswer.module = userModule
+              // parsedAnswer.question = correctQuestion
+              // parsedAnswer.answer = correctAnswer
+              // parsedAnswer.correct = false
+              // if(quiz[correctQuestion] == correctAnswer){
+              //   parsedAnswer.correct = true
+              // }
               return parsedAnswer
             })
             return parsedAnswerArray
