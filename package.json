@@ -21,8 +21,8 @@
   },
   "scripts": {
     "dev": "nodemon src/server.js",
-    "drop": "node src/models/drop.js",
-    "seed": "node src/models/seed.js",
+    "drop": "node models/drop.js",
+    "seed": "node models/seed.js",
     "start": "node server.js",
     "deploy": "now -E production.env"
   }
