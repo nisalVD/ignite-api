@@ -27,15 +27,19 @@
 * name: String
 
 #### Marking
-User: References
-Module: References
-Quest.answer: References
-correct: boolean
+* User: References
+* Module: References
+* Quest.answer: References
+* correct: boolean
 
 ### Answer
-Question: references
-Question.answer: references
+* Question: references
+* Question.answer: references
 
+### Feed
+* heading: String
+* content: String
+* time: Date  -- Current Time
 
 ### CheckList
 * x View all modules
@@ -48,10 +52,11 @@ Question.answer: references
 * Refactor the routes alot
 
 ### REFACTOR-TODO
+* Refactor with proper status code
 ## IMPORTANT
-* Add Promise.all to the router for markings, its currectly synchronous
+* x Add Promise.all to the router for markings, its currectly synchronous
 * Add verfication for question / answer in Answer model (enum)
-* Add a better response to Post /marking (currently only response last marking)
+* x Add a better response to Post /marking (currently only response last marking)
 
 ### Remember
 * you can get module by question.module
