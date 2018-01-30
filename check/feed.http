@@ -1,0 +1,7 @@
+POST http://localhost:7000/feed
+Content-Type: application/json
+
+{
+  "heading": "First feed",
+  "content": "the first ever feed ever created in the history of mankind"
+}
