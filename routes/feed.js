@@ -9,4 +9,9 @@ router.get('/feeds', (req,res) => {
     .catch(error => res.status(404).send(error))
 })
 
+router.post('/feed', (req,res) => {
+  Feed.create(req.body)
+    .then(newsFeed => res.status(202).json(newsFeed))
+    .catch(error => res.status(404).send(error))
+})
 module.exports = router
