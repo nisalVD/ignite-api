@@ -24,7 +24,8 @@ server.use([
   require('./routes/modules'),
   require('./routes/questions'),
   require('./routes/admin'),
-  require('./routes/markings')
+  require('./routes/markings'),
+  require('./routes/feed')
 ])
 
 server.get("/", authMiddleware.requireJWT, (req,res) => {
