@@ -4,6 +4,7 @@ const Question = require('../models/Question')
 const Answer = require('../models/Answer')
 const User = require('../models/User')
 const Marking = require('../models/Marking')
+const Feed = require('../models/Feed')
 const requireAdmin = require('../middleware/admin')
 
 const router = new express.Router()
