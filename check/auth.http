@@ -24,5 +24,15 @@ Content-Type: application/json
 
 {
   "email": "admin@admin.com",
-  "password": "password"
+  "password": "password456"
+}
+###
+
+PATCH http://localhost:7000/auth/update
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTc3MzQyNzcsImV4cCI6MTUxODMzOTA3Nywic3ViIjoiNWE2Nzc3OTRiYjEzMjRkYzMwODhiMzhjIn0.6DEjkKNRJAeMs4FKQWj0SBDcvzvmyIFzPK-jRL_rfOI
+Content-Type: application/json
+
+{
+  "oldPassword": "password123",
+  "newPassword": "password456"
 }
