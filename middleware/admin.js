@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const jwtSecret = process.env.JWT_SECRET
-const jwtAlgorithm = 'HS256'
+const jwtAlgorithm = process.env.JWT_ALGORITHM
 
 function requireAdmin(req, res, next) {
   const token = req.headers['authorization'].split(' ')[1]
