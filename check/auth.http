@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
   "email": "admin@admin.com",
-  "password": "password456"
+  "password": "password123"
 }
 ###
 
@@ -33,6 +33,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 Content-Type: application/json
 
 {
-  "oldPassword": "password789",
-  "newPassword": "password456"
+  "oldPassword": "password456",
+  "newPassword": "password123"
+}
+### Update User details
+
+PATCH http://localhost:7000/auth/update-details
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTc3MzQyNzcsImV4cCI6MTUxODMzOTA3Nywic3ViIjoiNWE2Nzc3OTRiYjEzMjRkYzMwODhiMzhjIn0.6DEjkKNRJAeMs4FKQWj0SBDcvzvmyIFzPK-jRL_rfOI
+Content-Type: application/json
+
+{
+  "firstName": "What the hell are you",
+  "lastName": "beep"
 }

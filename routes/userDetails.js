@@ -9,11 +9,17 @@ router.patch('/auth/update',getUser, (req, res) => {
     .then(user => {
       user.changePassword(req.body.oldPassword,req.body.newPassword, function(err) {
         if (err){
-            return res.status(200).json({success: false})
+          return res.status(200).json({success: false})
         }
-        return res.status(404).json({sucess: true})
+          return res.status(404).json({sucess: true})
       })
     })
+})
+
+router.patch('/auth/update-details', getUser, (req, res) => {
+  User.findByIdAndUpdate(req.sub, {$set: req.body }, {new: true})
+    .then(result => res.status(200).json(result))
+    .catch(error => res.status(404).json(error))
 })
 
 module.exports = router
