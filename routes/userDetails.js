@@ -6,6 +6,10 @@ const api_key = process.env.MAILGUN_KEY
 const domain = 'sandbox7a44e8b99eae406fa91ee0ecd9054406.mailgun.org'
 const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
+const URL = 'http://localhost:3000'
+// Change to email address to send modules are completed
+const ADMIN_EMAIL = 'nisalvd@gmail.com'
+
 const router = new express.Router()
 
 router.patch('/user/password/update',getUser, (req, res) => {
@@ -33,21 +37,24 @@ router.patch('/user/details/update', getUser, (req, res) => {
 })
 
 router.post('/user/check-list-complete', getUser, (req, res) => {
-  const data = {
-    from: 'Excited User <nisalvd@gmail.com>',
-    to: 'nisalvd@gmail.com',
-    subject: 'All Tests Completed',
-    text: `All tests have been completed by user with the email ${req.decoded.email}`
-  };
+  User.findById(req.sub)
+    .then(user => {
+      const data = {
+        from: `${user.firstName} <${req.decoded.email}>`,
+        to: `${ADMIN_EMAIL}`,
+        subject: 'All Tests Completed',
+        text: `<h1>User Submission</h1>\nFull Name: ${user.firstName} ${user.lastName}\nEmail: ${req.decoded.email}\n\n${URL}/admin`
+      };
 
-  mailgun.messages().send(data, (error, body) => {
-    if (error) {
-      res.status(404).json({error})
-    } else {
-      res.status(200).json({body})
-    }
+      mailgun.messages().send(data, (error, body) => {
+        if (error) {
+          res.status(404).json({error})
+        } else {
+          res.status(200).json({body})
+        }
 
-  })
+      })
+    })
 
 })
 
