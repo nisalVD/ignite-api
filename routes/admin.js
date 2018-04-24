@@ -9,6 +9,15 @@ const requireAdmin = require('../middleware/admin')
 
 const router = new express.Router()
 
+//## User Routes
+// Delete User
+router.delete('admin/user/:id' , (req, res) => {
+  const {id} = req.params
+  User.findByIdAndRemove(id)
+    .then(user =>  res.status(202).json(user))
+    .catch(error => res.status(404).json({error: error.message}))
+})
+
 //## Module Routes
 // Find All user data
 router.get('/users', requireAdmin,  (req,res) => {
@@ -72,7 +81,7 @@ router.delete('/question/:id', requireAdmin, (req,res) => {
       res.status(404).json({error: error.message})
     })
 })
- 
+
 //## Answer Routes
 // List all the answers
 router.get('/answers', requireAdmin, (req, res) => {

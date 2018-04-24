@@ -29,6 +29,11 @@ router.patch('/user/password/update',getUser, (req, res) => {
     })
 })
 
+router.get('/user/details/get-details', getUser, (req,res) => {
+  User.findById(req.sub)
+    .then(user => res.status(200).json(user))
+    .catch(error => res.status(404).json(error))
+})
 
 router.patch('/user/details/update', getUser, (req, res) => {
   User.findByIdAndUpdate(req.sub, {$set: req.body }, {new: true})
@@ -40,10 +45,10 @@ router.post('/user/check-list-complete', getUser, (req, res) => {
   User.findById(req.sub)
     .then(user => {
       const data = {
-        from: `${user.firstName} <${req.decoded.email}>`,
+        from: `${user.firstName} <${user.email}>`,
         to: `${ADMIN_EMAIL}`,
         subject: 'All Tests Completed',
-        text: `<h1>User Submission</h1>\nFull Name: ${user.firstName} ${user.lastName}\nEmail: ${req.decoded.email}\n\n${URL}/admin`
+        text: `User Submission\nFull Name: ${user.firstName} ${user.lastName}\nEmail: ${user.email}\n\n${URL}/admin`
       };
 
       mailgun.messages().send(data, (error, body) => {
