@@ -11,11 +11,43 @@ const router = new express.Router()
 
 //## User Routes
 // Delete User
-router.delete('admin/user/:id' , (req, res) => {
+router.delete('/admin/user/:id', (req, res) => {
+
   const {id} = req.params
-  User.findByIdAndRemove(id)
-    .then(user =>  res.status(202).json(user))
-    .catch(error => res.status(404).json({error: error.message}))
+  console.log('id', id)
+    User.findById(id)
+    .then(user => {
+      console.log('user', user)
+      if (user.admin === true) {
+        // TODO add better logic to pass eror to catch
+        res.status(404).json({message: "admin cannot be removed"})
+      } else {
+        User.findByIdAndRemove(id)
+          .then(user => {
+            res.status(202).json(user)
+          })
+          .catch(error => {
+            res.status(404).json({error: error.message})
+          })
+      }
+    })
+    .catch(error => {
+      res.status(404).json({error: error.message})
+    })
+      // if(user.admin == null && user.admin === true) {
+      //   throw(new Error('cannot delete admin user'))
+      // }
+      // else {
+      //     .then(user => res.status(202).json(user))
+  //   User.findByIdAndRemove(id)
+      //     .catch(error => {
+      //       throw(new Error(error.message))
+      //     })
+      // }
+
+  // User.findByIdAndRemove(id)
+  //   .then(user =>  res.status(202).json(user))
+  //   .catch(error => res.status(404).json({error: error.message}))
 })
 
 //## Module Routes
