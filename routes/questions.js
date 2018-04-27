@@ -1,4 +1,5 @@
 const express = require('express')
+const User = require('../models/User.js')
 const Question = require('../models/Question')
 const authMiddleware = require('../middleware/auth')
 
@@ -22,6 +23,31 @@ router.get('/question/:id/answers', authMiddleware.requireJWT, (req, res) => {
     res.status(201).json({answersArr})
   })
   .catch(err => res.status(404).send.err(err))
+})
+
+//verify user
+router.get('/verify/:id/:token', (req, res) => {
+  const id = req.params.id
+  const token = req.params.token
+  User.findById(id)
+    .then(user => {
+      console.log(user)
+      if (user.verified === false) {
+        if(user.verifyToken === token) {
+          user.update({verified: true})
+            .then(user => {
+              res.json({message: "user sucessfully verified"}).status(202)
+            })
+        } else {
+          return Promise.reject('incorrect Token')
+        }
+        } else {
+          return Promise.reject('user already verified')
+        }
+    })
+    .catch(error => {
+      res.json({message: error}).status(404)
+    })
 })
 
 module.exports = router

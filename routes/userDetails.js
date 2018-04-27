@@ -12,6 +12,18 @@ const ADMIN_EMAIL = 'nisalvd@gmail.com'
 
 const router = new express.Router()
 
+router.post('/user/email/is-valid', (req,res) => {
+  const {email} = req.body
+  User.find({email: email})
+    .then(user => {
+      if(user.length > 0) {
+        res.json({message: false}).status(202)
+      } else {
+        res.json({message: true}).status(404)
+      }
+    })
+})
+
 router.patch('/user/password/update',getUser, (req, res) => {
 
   const oldPassword = req.body.oldPassword

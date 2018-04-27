@@ -2,6 +2,7 @@
 const mongoose = require('./init')
 const passportLocalMongoose = require('passport-local-mongoose')
 const Schema = mongoose.Schema
+const randomstring = require("randomstring");
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -32,13 +33,21 @@ const userSchema = new mongoose.Schema({
      type: String,
      required: "Mobile Number is required"
    },
-   modulesCompleted: [{
-    type: Schema.ObjectId,
-    ref: 'Module',
-  }],
-   admin: {
-    type: Boolean,
-    default: false
+    verifyToken: {
+      type:String,
+      default: randomstring.generate()
+    },
+    verified: {
+      type: Boolean,
+      default: false
+    },
+     modulesCompleted: [{
+      type: Schema.ObjectId,
+      ref: 'Module',
+    }],
+     admin: {
+      type: Boolean,
+      default: false
   }
 })
 
