@@ -3,6 +3,14 @@ const JWT = require('jsonwebtoken')
 const passportJwt = require('passport-jwt')
 const User = require('../models/User')
 
+// mailgun to send verification email
+
+const SITE_URL = 'http://localhost:3000'
+
+const api_key = process.env.MAILGUN_KEY
+const domain = 'sandbox7a44e8b99eae406fa91ee0ecd9054406.mailgun.org'
+const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+
 const jwtSecret = process.env.JWT_SECRET
 const jwtAlgorithm = 'HS256'
 const jwtExpiresIn = '7 days'
@@ -19,13 +27,30 @@ function register(req, res, next) {
     postCode: req.body.postCode,
     state: req.body.state,
     mobileNumber: req.body.mobileNumber,
-    admin: req.body.admin
   })
   User.register(user, req.body.password, (error, user) => {
     if (error) {
       next(error)
       return
     }
+    // send verification email to user
+
+      const data = {
+        from: 'nisal <nisalvd@gmail.com>',
+        to: `${user.email}`,
+        subject: 'verification',
+        text: `Click this to verify email \n ${SITE_URL}/verify-account/${user._id}/${user.verifyToken}`
+      };
+    console.log(data)
+      mailgun.messages().send(data, (error, body) => {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log(body)
+        }
+      })
+
+
     req.user = user
     next()
   })
@@ -36,14 +61,14 @@ passport.use(new passportJwt.Strategy(
     jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: jwtSecret,
     algorithms: [jwtAlgorithm]
-  }, 
+  },
   // When we have a verified token
   (payload, done) => {
     // Find user by using id from database
     User.findById(payload.sub)
       .then(user => {
         // If user was found with this id
-        if (user) {
+        if (user && user.verified === true || user.admin === true) {
           done(null, user)
         }
         // If user was not found
@@ -65,7 +90,8 @@ function signJWTForUser(req, res) {
   const token = JWT.sign(
     {
       email: user.email,
-      admin: user.admin
+      admin: user.admin,
+      verified: user.verified
     },
       // secret
       jwtSecret,
