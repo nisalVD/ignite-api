@@ -22,20 +22,23 @@ router.post('/verify-token', (req, res) => {
   const token = req.body.token
   User.findById(id)
     .then(user => {
-      req.user = user
+      if (user.verified === true) {
+        return Promise.reject('User already verified')
+      }
       if (user.verified === false) {
         if(user.verifyToken === token) {
           User.findByIdAndUpdate(id, {verified: true}, {new: true})
             .then((updatedUser) => {
+              console.log(updatedUser)
               req.user = updatedUser
+              console.log(updatedUser)
               authMiddleWare.signJWTForUser(req,res)
+              return
             })
           } else {
             return Promise.reject('incorrect Token')
           }
-        } else {
-          return Promise.reject('user already verified')
-        }
+      }
     })
     .catch(error => {
       if (error.message) {
