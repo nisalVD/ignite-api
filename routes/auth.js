@@ -25,9 +25,9 @@ router.post('/verify-token', (req, res) => {
       req.user = user
       if (user.verified === false) {
         if(user.verifyToken === token) {
-          user.update({verified: true})
-            .then(() => {
-              req.user = user
+          User.findByIdAndUpdate(id, {verified: true}, {new: true})
+            .then((updatedUser) => {
+              req.user = updatedUser
               authMiddleWare.signJWTForUser(req,res)
             })
           } else {
