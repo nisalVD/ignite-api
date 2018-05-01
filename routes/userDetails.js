@@ -27,7 +27,7 @@ router.post('/user/email/is-valid', (req,res) => {
 })
 
 // Send email to change password
-router.post('/user/password/change-password-email', (req,res) => {
+router.post('/user/password/request-change-password-email', (req,res) => {
 
   const { email } = req.body
 
@@ -41,7 +41,6 @@ router.post('/user/password/change-password-email', (req,res) => {
           subject: 'verification',
           text: `Click this to verify email \n ${SITE_URL}/user/update-password-email/${user._id}/${user.verifyToken}`
         };
-      console.log(data)
         mailgun.messages().send(data, (error, body) => {
           if (error) {
             return res.json({message: 'something went wrong sending email'}).status(404)
@@ -55,6 +54,31 @@ router.post('/user/password/change-password-email', (req,res) => {
     })
 })
 
+// change password via email request
+router.patch('/user/password/change-password-email', (req, res) => {
+
+  const { id } = req.body
+  const { verifyToken } = req.body
+  const { newPassword } = req.body
+
+  User.findById(id)
+    .then(user => {
+      if (user.verifyToken === verifyToken) {
+        user.setPassword(newPassword, () => {
+          user.verifyToken = randomstring.generate()
+          user.save()
+          return res.json({message: "password sucessfully changed"}).status(202)
+        })
+      } else {
+        return res.json({message: "invalid link"}).status(404)
+      }
+    })
+    .catch(error => {
+      return res.json({message: "invalid link"}).status(404)
+    })
+})
+
+// change password via profile
 router.patch('/user/password/update',getUser, (req, res) => {
 
   const oldPassword = req.body.oldPassword
