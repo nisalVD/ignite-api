@@ -1,6 +1,8 @@
 const express = require('express')
 const User = require('../models/User')
 const getUser = require('../middleware/getUser')
+const randomstring = require("randomstring");
+const SITE_URL = 'http://localhost:3000'
 
 const api_key = process.env.MAILGUN_KEY
 const domain = 'sandbox7a44e8b99eae406fa91ee0ecd9054406.mailgun.org'
@@ -20,6 +22,35 @@ router.post('/user/email/is-valid', (req,res) => {
         res.json({message: false}).status(202)
       } else {
         res.json({message: true}).status(404)
+      }
+    })
+})
+
+// Send email to change password
+router.post('/user/password/change-password-email', (req,res) => {
+
+  const { email } = req.body
+
+  User.findOneAndUpdate({email}, {verifyToken: randomstring.generate()}, {new: true})
+    .then(user => {
+      console.log(user)
+      if (user.verified) {
+        const data = {
+          from: 'nisal <nisalvd@gmail.com>',
+          to: `${user.email}`,
+          subject: 'verification',
+          text: `Click this to verify email \n ${SITE_URL}/user/update-password-email/${user._id}/${user.verifyToken}`
+        };
+      console.log(data)
+        mailgun.messages().send(data, (error, body) => {
+          if (error) {
+            return res.json({message: 'something went wrong sending email'}).status(404)
+          } else {
+            return res.json({message: 'email sucessfully sent'}).status(202)
+          }
+        })
+      } else {
+        return res.json({message: "please verify email first"}).status(202)
       }
     })
 })

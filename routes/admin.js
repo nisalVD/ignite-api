@@ -34,20 +34,6 @@ router.delete('/admin/user/:id', (req, res) => {
     .catch(error => {
       res.status(404).json({error: error.message})
     })
-      // if(user.admin == null && user.admin === true) {
-      //   throw(new Error('cannot delete admin user'))
-      // }
-      // else {
-      //     .then(user => res.status(202).json(user))
-  //   User.findByIdAndRemove(id)
-      //     .catch(error => {
-      //       throw(new Error(error.message))
-      //     })
-      // }
-
-  // User.findByIdAndRemove(id)
-  //   .then(user =>  res.status(202).json(user))
-  //   .catch(error => res.status(404).json({error: error.message}))
 })
 
 //## Module Routes
