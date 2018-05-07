@@ -27,6 +27,8 @@ function register(req, res, next) {
     postCode: req.body.postCode,
     state: req.body.state,
     mobileNumber: req.body.mobileNumber,
+    admin: req.body.admin,
+    verified: req.body.verified
   })
   User.register(user, req.body.password, (error, user) => {
     if (error) {
