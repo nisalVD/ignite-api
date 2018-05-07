@@ -131,7 +131,7 @@ router.post('/feed', (req,res) => {
 })
 
 router.delete('/feed/:id', (req,res) => {
-  const {id} = this.params
+  const {id} = req.params
   Feed.findByIdAndRemove(id)
     .then(feed => res.status(202).json(feed))
     .catch(error => res.status(404).json({message: error.message}))
