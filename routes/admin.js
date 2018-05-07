@@ -124,13 +124,13 @@ router.get('/markings', requireAdmin, (req,res) => {
 
 //## Feed Routes
 // feeds routes
-router.post('/feed', (req,res) => {
+router.post('/feed', requireAdmin, (req,res) => {
   Feed.create(req.body)
     .then(newsFeed => res.status(202).json(newsFeed))
     .catch(error => res.status(404).send(error))
 })
 
-router.delete('/feed/:id', (req,res) => {
+router.delete('/feed/:id', requireAdmin, (req,res) => {
   const {id} = req.params
   Feed.findByIdAndRemove(id)
     .then(feed => res.status(202).json(feed))
