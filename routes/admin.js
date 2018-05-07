@@ -130,4 +130,11 @@ router.post('/feed', (req,res) => {
     .catch(error => res.status(404).send(error))
 })
 
+router.delete('/feed/:id', (req,res) => {
+  const {id} = this.params
+  Feed.findByIdAndRemove(id)
+    .then(feed => res.status(202).json(feed))
+    .catch(error => res.status(404).json({message: error.message}))
+})
+
 module.exports = router
