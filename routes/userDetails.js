@@ -30,16 +30,14 @@ router.post('/user/email/is-valid', (req,res) => {
 router.post('/user/password/request-change-password-email', (req,res) => {
 
   const { email } = req.body
-
-  User.findOneAndUpdate({email}, {verifyToken: randomstring.generate()}, {new: true})
-    .then(user => {
-      console.log(user)
+  User.findOneAndUpdate({email: email}, {verifyToken: randomstring.generate()}, {new: true})
+   .then(user => {
       if (user.verified) {
         const data = {
           from: 'nisal <nisalvd@gmail.com>',
           to: `${user.email}`,
           subject: 'verification',
-          text: `Click this to verify email \n ${SITE_URL}/user/update-password-email/${user._id}/${user.verifyToken}`
+          text: `Click this to verify email \n ${SITE_URL}/user/forget-password/update/${user._id}/${user.verifyToken}`
         };
         mailgun.messages().send(data, (error, body) => {
           if (error) {
@@ -51,6 +49,9 @@ router.post('/user/password/request-change-password-email', (req,res) => {
       } else {
         return res.json({message: "please verify email first"}).status(202)
       }
+    })
+    .catch(err => {
+      res.json({message: err.message}).status(404)
     })
 })
 
