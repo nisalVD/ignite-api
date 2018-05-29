@@ -30,28 +30,25 @@ router.post('/user/email/is-valid', (req,res) => {
 router.post('/user/password/request-change-password-email', (req,res) => {
 
   const { email } = req.body
+  console.log(email)
   User.findOneAndUpdate({email: email}, {verifyToken: randomstring.generate()}, {new: true})
    .then(user => {
-      if (user.verified) {
         const data = {
           from: 'nisal <nisalvd@gmail.com>',
           to: `${user.email}`,
-          subject: 'verification',
+          subject: 'Update Password',
           text: `Click this to verify email \n ${SITE_URL}/user/forget-password/update/${user._id}/${user.verifyToken}`
-        };
+        }
         mailgun.messages().send(data, (error, body) => {
           if (error) {
-            return res.json({message: 'something went wrong sending email'}).status(404)
+            return res.json({success: false}).status(404)
           } else {
-            return res.json({message: 'email sucessfully sent'}).status(202)
+            return res.json({success: true}).status(202)
           }
         })
-      } else {
-        return res.json({message: "please verify email first"}).status(202)
-      }
-    })
+   })
     .catch(err => {
-      res.json({message: err.message}).status(404)
+      res.json({success: false}).status(404)
     })
 })
 
@@ -67,6 +64,7 @@ router.patch('/user/password/change-password-email', (req, res) => {
       if (user.verifyToken === verifyToken) {
         user.setPassword(newPassword, () => {
           user.verifyToken = randomstring.generate()
+          user.verified = true
           user.save()
           return res.json({message: "password sucessfully changed"}).status(202)
         })
